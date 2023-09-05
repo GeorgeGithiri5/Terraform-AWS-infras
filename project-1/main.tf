@@ -30,3 +30,26 @@ resource "aws_subnet" "main-subnet" {
     Name = "Main"
   }
 }
+
+resource "aws_network_interface" "network-interface" {
+  subnet_id = aws_subnet.main-subnet.id
+}
+
+resource "aws_route_table" "rt-main" {
+  vpc_id = aws_vpc.main-test.id
+
+  route {
+    cidr_block = "10.0.1.0/24"
+    gateway_id = aws_internet_gateway.example.id
+  }
+
+  route {
+    ipv6_cidr_blocl = "::/0"
+    egress_only_gateway_id = aws_internet_gateway.example.id
+  }
+
+  tags = {
+    Name = "rt-example"
+  }
+
+}
