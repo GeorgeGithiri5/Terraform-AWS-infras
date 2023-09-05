@@ -11,3 +11,12 @@ resource "aws_vpc" "main-test" {
     Name = "main-vpc"
   }
 }
+
+resource "aws_subnet" "main-subnet"{
+    vpc_id = aws_vpc.main_test.id
+    cidr_block = "10.0.1.0/24"
+
+    tags = {
+        Name = "Main"
+    }
+}
